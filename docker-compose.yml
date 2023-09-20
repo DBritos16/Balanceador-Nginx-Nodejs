@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app1:
+    build:
+      context: ./web1
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  app2:
+    build:
+      context: ./web2
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8088:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app1
+      - app2
